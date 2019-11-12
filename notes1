@@ -1,0 +1,38 @@
+mongoose - ODM - object document mapper
+
+1. helps u -> map a model to a collection
+2. helps u -> map an object to a document
+3. map an object's property to a document's field
+
+sequalize - SQL Database - Mysql
+In SQL we cannot store array
+
+MVC - model View Controller - python,ruby, java etc there follows 
+Express is unopinioted 
+
+
+concurrently - multiple commands run properly.  - it should be  \" \""
+
+npm install -g concurrently -globally
+{it takes to arguments which is in the string} 
+ --> All asynchronous operation  are concurrents in JS.
+
+ pacakage.json -> "dev": "concurrently \"nodemon index.js\" \"cd client && npm start\""
+
+ cross origin resourse sharing - cors  - (server site)
+
+ key need to be specified where the place of mapping..
+
+value of 'this'
+ es5 inside it - global object 
+     outside it - empty object
+ es6 inside it - empty object 
+    outside it - empty object
+    arrow function do not hav this its own, value alwys in outer scpoe.
+inside method - current object
+
+unique is happening on the server-site.
+
+
+
+userReducer

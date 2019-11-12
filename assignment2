@@ -1,0 +1,17 @@
+5. employeeSchema - add a new field called as department - type is objectId,  required
+                 - ensure when a new employee is added, he/she belong to a department 
+6.
+      GET/customers/:id - show one customer
+      GET/departments/:id - show one department
+      GET/employees/:id - show one employee
+
+
+      delete/customers/:id - delete one customer
+      delete/departments/:id- delete one department
+      delete/employees/:id - delete one employee
+
+
+     
+      PUT/customers/:id - update the customer
+      PUT/departments/:id - update the department
+      PUT/employees/:id - update the employee
