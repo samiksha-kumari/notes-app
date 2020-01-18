@@ -47,7 +47,7 @@ class RegistrationForm extends React.Component {
           <br />
           <label htmlFor="email">email</label>
           <input
-            type="text"
+            type="email"
             value={this.state.email}
             onChange={this.handleChange}
             name="email"

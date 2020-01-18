@@ -2,8 +2,11 @@ const mongoose = require("mongoose");
 
 //db configuration - establishing connection to db
 //create functn , execute functn , export funtn.
+
+mongoose.Promise = global.Promise;
+
 const configureDB = () => {
-  mongoose.Promise = global.Promise; // basically , promise to handle our async op,& the promise lib is on provided as ES6 promises.
+  // basically , promise to handle our async op,& the promise lib is on provided as ES6 promises.
   // what promise lib that u want to use
   mongoose
     .connect("mongodb://localhost:27017/june-weekday-notes-app", {

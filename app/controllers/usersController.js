@@ -5,10 +5,12 @@ const _ = require("lodash");
 //localhost:30005/users/register
 module.exports.register = (req, res) => {
   const body = req.body;
+  console.log(body, "body")
   const user = new User(body);
   user
     .save()
     .then(user => {
+      console.log(user)
       // res.json(user);
       const { _id, username, email } = user; // object destructuring
       console.log(user);
@@ -69,10 +71,10 @@ module.exports.account = (req, res) => {
 module.exports.logout = (req, res) => {
   const { user, token } = req;
   User.findByIdAndUpdate(user._id, { $pull: { tokens: { token: token } } })
-    .then(function() {
+    .then(function () {
       res.send({ notice: "successfully logged out" });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       res.send(err);
     });
 };

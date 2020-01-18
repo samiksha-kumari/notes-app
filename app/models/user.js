@@ -19,10 +19,10 @@ const userSchema = new Schema({
     //how to chk the format of the email
 
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         return validator.isEmail(value);
       },
-      message: function() {
+      message: function () {
         return "invalid email format";
       }
     }
@@ -47,26 +47,29 @@ const userSchema = new Schema({
 });
 
 // pre hooks
-userSchema.pre("save", function(next) {
+userSchema.pre("save", function (next) {
   const user = this;
   if (user.isNew) {
-    bcryptjs.genSalt(10).then(function(salt) {
-      bcryptjs.hash(user.password, salt).then(function(encryptedPassword) {
+    bcryptjs.genSalt(10).then(function (salt) {
+      bcryptjs.hash(user.password, salt).then(function (encryptedPassword) {
         user.password = encryptedPassword;
         next();
       });
     });
   } else {
-    next();
+    next();// it goes to save method
   }
 });
 
 //find by token
-userSchema.statics.findByToken = function(token) {
+userSchema.statics.findByToken = function (token) {
   let tokenData;
+  console.log(token, 'token')
   try {
     tokenData = jwt.verify(token, "jwt@456");
+    console.log("token-data", tokenData)
   } catch (err) {
+    console.log("errorintoken", err)
     return Promise.reject(err);
   }
   return User.findOne({
@@ -76,50 +79,44 @@ userSchema.statics.findByToken = function(token) {
 };
 
 //own static method
-userSchema.statics.findByCredentials = function(email, password) {
+userSchema.statics.findByCredentials = function (email, password) {
   const User = this;
-  return User.findOne({ email }).then(function(user) {
+  return User.findOne({ email }).then(function (user) {
     if (!user) {
-      return Promise.reject({
-        errors: "invalid email / password"
-      });
+      return Promise.reject("invalid email / password");
     }
     return bcryptjs
       .compare(password, user.password)
-      .then(function(result) {
+      .then(function (result) {
         if (result) {
           return Promise.resolve(user);
         } else {
-          return Promise.reject({
-            errors: "invalid email /password"
-          });
+          return Promise.reject("invalid email /password");
         }
       })
-      .catch(function(err) {
+      .catch(function (err) {
         return Promise.reject(err);
       });
   });
 };
 
 //own instance methods
-userSchema.methods.generateToken = function() {
+userSchema.methods.generateToken = function () {
   const user = this;
   const tokenData = {
     _id: user._id,
     username: user.username,
-
     createdAt: Number(new Date())
   };
   const token = jwt.sign(tokenData, "jwt@456");
+
   user.tokens.push({ token });
   return user
     .save()
-    .then(function(user) {
-      return Promise.resolve({
-        token
-      });
+    .then(function (user) {
+      return Promise.resolve({ _id: user._id, token: token });
     })
-    .catch(function(err) {
+    .catch(function (err) {
       return Promise.reject(err);
     });
 };
